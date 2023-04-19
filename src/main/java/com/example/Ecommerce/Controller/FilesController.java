@@ -21,8 +21,9 @@ import java.util.List;
 
 @Controller
 @CrossOrigin("http://localhost:8081")
-@RequestMapping("/api/v1")
+@RequestMapping("/api/user/v1")
 public class FilesController {
+
 
 
     @Autowired
@@ -30,6 +31,12 @@ public class FilesController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    public FilesController(FilesStorageService storageService, UserRepository userRepository) {
+        this.storageService = storageService;
+        this.userRepository = userRepository;
+    }
 
     @PostMapping("/upload/{userId}")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam(name = "file")MultipartFile file, @PathVariable(name = "userId") Integer userId){

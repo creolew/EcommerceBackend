@@ -1,23 +1,22 @@
 package com.example.Ecommerce.payload;
 
-import com.example.Ecommerce.entity.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
-public class UserDto {
-    private Integer id;
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class RegisterDto {
 
     private String username;
 
     private String email;
-
 
     private String password;
 
@@ -30,5 +29,4 @@ public class UserDto {
     private boolean enabled;
 
     private Set<String> roles = new HashSet<>();
-
 }

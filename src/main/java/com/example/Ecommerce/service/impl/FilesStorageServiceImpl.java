@@ -2,16 +2,15 @@ package com.example.Ecommerce.service.impl;
 
 import com.example.Ecommerce.Controller.FilesController;
 import com.example.Ecommerce.entity.FileInfo;
-import com.example.Ecommerce.entity.User;
 import com.example.Ecommerce.service.FilesStorageService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.FileAlreadyExistsException;
@@ -21,6 +20,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 
 
 @Service

@@ -10,9 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
-import java.util.Iterator;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -23,13 +20,19 @@ public class UserRepositoryTests {
     @Autowired
     private UserRepository repo;
 
+
     @Autowired
     private TestEntityManager entityManager;
+
+
+
+
 
     @Test
     public void testCreateUserAdmin(){
         Role admin = entityManager.find(Role.class, 1);
-        User userHuy = new User("huy@gmail.com", "huy","Huy", "Quoc");
+        User userHuy = new User("Huy","huy@gmail.com", "huy","Huy", "Quoc");
+        //User userHuy = new User("huy@gmail.com", "huy","Huy", "Quoc");
 
         userHuy.addRole(admin);
 
@@ -42,7 +45,7 @@ public class UserRepositoryTests {
 
     @Test
     public void testCreateUserWithTwoRoles() {
-        User userRavi = new User("ravi@gmail.com", "ravi","Ravi", "Pham");
+        User userRavi = new User("Ravi","ravi@gmail.com", "ravi","Ravi", "Pham");
 
         Role roleEditor = new Role(3);
 
@@ -73,6 +76,14 @@ public class UserRepositoryTests {
         assertThat(userHuy).isNotNull();
     }
 
+    @Test
+    public void testUserByEmail(){
+        User userHuy = repo.findByEmail("phamquochuy3005@gmail.com").get();
+        System.out.println(userHuy);
+        assertThat(userHuy).isNotNull();
+    }
+
+
 
     @Test
     public void testUpdateUserDetails(){
@@ -100,6 +111,12 @@ public class UserRepositoryTests {
         Integer userId = 2;
         repo.deleteById(userId);
     }
+
+
+
+
+
+
 
 
 

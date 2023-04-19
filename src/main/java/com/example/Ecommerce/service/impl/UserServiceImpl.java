@@ -43,23 +43,23 @@ public class UserServiceImpl implements UserService {
         return listUsersDto;
     }
 
-    @Override
-    public UserDto createUser(UserDto userDto) {
-
-        if(userRepo.existsByEmail(userDto.getEmail())){
-            throw new EcommerceAPIException(HttpStatus.BAD_REQUEST, "Email is already used");
-        }
-
-
-        User tempUser = mapToEntity(userDto);
-
-        User savedUser = userRepo.save(tempUser);
-
-        return mapToDto(savedUser);
-
-
-
-    }
+//    @Override
+//    public UserDto createUser(UserDto userDto) {
+//
+//        if(userRepo.existsByEmail(userDto.getEmail())){
+//            throw new EcommerceAPIException(HttpStatus.BAD_REQUEST, "Email is already used");
+//        }
+//
+//
+//        User tempUser = mapToEntity(userDto);
+//
+//        User savedUser = userRepo.save(tempUser);
+//
+//        return mapToDto(savedUser);
+//
+//
+//
+//    }
 
     public UserDto updateUser(int userId, UserDto userDto){
         User user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
@@ -70,6 +70,10 @@ public class UserServiceImpl implements UserService {
 
         if(userDto.getLastName() != null){
             user.setLastName(userDto.getLastName());
+        }
+
+        if(userDto.getUsername() != null){
+            user.setUsername(userDto.getUsername());
         }
 
         if(userDto.getEmail() != null){
@@ -111,6 +115,7 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = new UserDto();
 
         userDto.setId(user.getId());
+        userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
         userDto.setPassword(user.getPassword());
         userDto.setEnabled(user.isEnabled());
@@ -126,6 +131,7 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         user.setId(userDto.getId());
+        user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
 
         //user.setPassword(userDto.getPassword());

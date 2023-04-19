@@ -23,7 +23,7 @@ public class RoleRepositoryTests {
 
     @Test
     public void testCreateFirstRole(){
-        Role role = new Role("Admin", "Manage everything");
+        Role role = new Role("ROLE_ADMIN", "Manage everything");
         Role savedRole= repo.save(role);
         assertThat(savedRole.getId()).isGreaterThan(0);
 
@@ -31,10 +31,10 @@ public class RoleRepositoryTests {
 
     @Test
     public void testCreateRestRoles(){
-        Role roleSalesPerson = new Role("Sales Person", "Manage product price, customers, shipping, orders and sales report");
-        Role roleEditor = new Role("Editor", "Manage categories, brands, products, articles, menus");
-        Role roleShipper = new Role("Shipper", "View products, view orders, update order status");
-        Role roleAssistant = new Role("Assistant", "Manage Q&A");
+        Role roleSalesPerson = new Role("ROLE_SELLER", "Manage product price, customers, shipping, orders and sales report");
+        Role roleEditor = new Role("ROLE_EDITOR", "Manage categories, brands, products, articles, menus");
+        Role roleShipper = new Role("ROLE_SHIPPER", "View products, view orders, update order status");
+        Role roleAssistant = new Role("ROLE_ASSISTANT", "Manage Q&A");
 
         ArrayList<Role> listRoles = new ArrayList<>();
         listRoles.add(roleSalesPerson);
