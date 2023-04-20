@@ -11,21 +11,16 @@ import java.util.stream.Stream;
 
 public interface FilesStorageService {
 
-    public void init();
 
-    public void save(MultipartFile file);
+    public void save(MultipartFile file, String folderName);
 
-    public Resource load(String fileName);
+    public Resource load(String fileName, String folderName);
 
-    public void deleteAll();
+    public Stream<Path> loadAll(String folderName);
 
-    public Stream<Path> loadAll();
+    void uploadFile(MultipartFile file,  String folderName);
 
-    void uploadFile(MultipartFile file);
+    List<FileInfo> getListFiles(String folderName);
 
-    List<FileInfo> getListFiles();
-
-    Resource getFile(String fileName);
-
-    void deleteImage(String imageName);
+    void deleteImage(String imageName, String folderName);
 }

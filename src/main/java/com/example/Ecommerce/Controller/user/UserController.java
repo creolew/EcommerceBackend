@@ -1,17 +1,14 @@
-package com.example.Ecommerce.Controller;
+package com.example.Ecommerce.Controller.user;
 
-import com.example.Ecommerce.entity.User;
-import com.example.Ecommerce.payload.UserDto;
+import com.example.Ecommerce.payload.user.UserDto;
 import com.example.Ecommerce.response.ResponseMessage;
 import com.example.Ecommerce.service.UserService;
-import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/user/v1")
@@ -32,8 +29,8 @@ public class UserController {
     }
 
 
-    @PutMapping("updateUser/{id}")
     @PreAuthorize("hasRole('Admin')")
+    @PutMapping("updateUser/{id}")
     public ResponseEntity<ResponseMessage> updateUser(@PathVariable(name = "id") Integer id, @RequestBody UserDto userDto){
         UserDto tempUser = userService.updateUser(id, userDto);
 
@@ -42,8 +39,8 @@ public class UserController {
         return new ResponseEntity<>(responseMessage, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("deleteUser/{id}")
     @PreAuthorize("hasRole('Admin')")
+    @DeleteMapping("deleteUser/{id}")
     public ResponseEntity<ResponseMessage> deleteUser(@PathVariable(name = "id") Integer id){
         userService.deleteUser(id);
         ResponseMessage responseMessage = new ResponseMessage("Delete user successfully", HttpStatus.OK.value());

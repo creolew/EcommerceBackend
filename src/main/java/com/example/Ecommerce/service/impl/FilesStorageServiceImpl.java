@@ -1,11 +1,10 @@
 package com.example.Ecommerce.service.impl;
 
-import com.example.Ecommerce.Controller.FilesController;
+import com.example.Ecommerce.Controller.user.FilesController;
 import com.example.Ecommerce.entity.FileInfo;
 import com.example.Ecommerce.service.FilesStorageService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,14 +25,11 @@ import java.util.stream.Stream;
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService {
 
-    private final Path root = Paths.get("uploads");
 
-    public void uploadFile(MultipartFile file){
-        String message = "";
+    public void uploadFile(MultipartFile file, String folderName){
 
         try{
-            save(file);
-           // message = "Upload the file successfully: " + file.getOriginalFilename();
+            save(file, folderName);
         }catch (Exception e){
 
             throw new RuntimeException("Could not upload the file: " + file.getOriginalFilename() + ". Error: " + e.getMessage());
@@ -42,8 +38,8 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public List<FileInfo> getListFiles() {
-        List<FileInfo> fileInfos = loadAll().map(path -> {
+    public List<FileInfo> getListFiles(String folderName) {
+            List<FileInfo> fileInfos = loadAll(folderName).map(path -> {
             String filename = path.getFileName().toString();
             String url = MvcUriComponentsBuilder
                     .fromMethodName(FilesController.class, "getFile", path.getFileName().toString()).build().toString();
@@ -54,34 +50,22 @@ public class FilesStorageServiceImpl implements FilesStorageService {
         return fileInfos;
     }
 
-    @Override
-    public Resource getFile(String fileName) {
-
-        return load(fileName);
-    }
 
 
 
 
 
     //    ----------------------------------------------------------------------------------------
-    @Override
-    public void init() {
-        try {
-            Files.createDirectories(root);
-        }catch (IOException exception){
-            throw new RuntimeException("Could not initialize folder for upload");
-        }
-    }
 
     @Override
-    public void save(MultipartFile file) {
+    public void save(MultipartFile file, String folderName) {
         try {
             String fileName = file.getOriginalFilename();
             if (!fileName.endsWith(".png") && !fileName.endsWith(".jpg")) {
                 throw new RuntimeException("Only PNG and JPG files are allowed.");
             }
-            Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+            Path root = Paths.get(folderName);
+            Files.copy(file.getInputStream(), root.resolve(file.getOriginalFilename()));
         }catch (Exception exception){
             if (exception instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("A file of that name already exists.");
@@ -93,8 +77,9 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public Resource load(String filename) {
+    public Resource load(String filename, String folderName) {
         try {
+            Path root = Paths.get(folderName);
             Path file = root.resolve(filename);
             Resource resource = (Resource) new UrlResource(file.toUri());
 
@@ -109,22 +94,18 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public void deleteAll() {
-        FileSystemUtils.deleteRecursively(root.toFile());
-
-    }
-
-    @Override
-    public Stream<Path> loadAll() {
+    public Stream<Path> loadAll(String folderName) {
         try {
-            return Files.walk(this.root, 1).filter(path -> !path.equals(this.root)).map(this.root::relativize);
+            Path root = Paths.get(folderName);
+            return Files.walk(root, 1).filter(path -> !path.equals(root)).map(root::relativize);
         } catch (IOException e) {
             throw new RuntimeException("Could not load the files!");
         }
     }
 
     @Override
-    public void deleteImage(String imageName) {
+    public void deleteImage(String imageName, String folderName) {
+        Path root = Paths.get(folderName);
         Path filePath = root.resolve(imageName);
         try{
             Files.delete(filePath);

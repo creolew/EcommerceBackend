@@ -1,4 +1,4 @@
-package com.example.Ecommerce.Controller;
+package com.example.Ecommerce.Controller.user;
 
 import com.example.Ecommerce.entity.FileInfo;
 import com.example.Ecommerce.entity.User;
@@ -45,9 +45,9 @@ public class FilesController {
 
         String message = "";
         //neu chua co image
-
+        String folderName = "uploads";
         if(user.getPhotos() == null){
-            storageService.uploadFile(file);
+            storageService.uploadFile(file,folderName);
 
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
             user.setPhotos(fileName);
@@ -57,12 +57,14 @@ public class FilesController {
             message = "Upload the file successfully: " + file.getOriginalFilename();
         }
 
+
+        //neu co hinh anh
         if(user.getPhotos() != null && !user.getPhotos().isEmpty()){
             String oldFileName = user.getPhotos();
-            storageService.deleteImage(oldFileName);
+            storageService.deleteImage(oldFileName, folderName);
 
             //luu anh moi
-            storageService.uploadFile(file);
+            storageService.uploadFile(file, folderName);
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
             user.setPhotos(fileName);
             userRepository.save(user);
@@ -77,7 +79,8 @@ public class FilesController {
     }
     @GetMapping("/listFiles")
     public ResponseEntity<List<FileInfo>> getListFiles(){
-        List<FileInfo> listFiles = storageService.getListFiles();
+        String folderName = "uploads";
+        List<FileInfo> listFiles = storageService.getListFiles(folderName);
 
         return ResponseEntity.status(HttpStatus.OK).body(listFiles);
 
@@ -86,7 +89,8 @@ public class FilesController {
     @GetMapping("/files/{filename:.+}") // dung de download file
     @ResponseBody
     public ResponseEntity<Resource> getFile(@PathVariable String filename){
-        Resource file = storageService.load(filename);
+        String folderName = "uploads";
+        Resource file = storageService.load(filename, folderName);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }

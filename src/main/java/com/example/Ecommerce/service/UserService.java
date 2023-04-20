@@ -1,7 +1,6 @@
 package com.example.Ecommerce.service;
 
-import com.example.Ecommerce.payload.UserDto;
-import org.apache.catalina.User;
+import com.example.Ecommerce.payload.user.UserDto;
 
 import java.util.List;
 

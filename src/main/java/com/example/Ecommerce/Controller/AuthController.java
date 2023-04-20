@@ -1,9 +1,8 @@
 package com.example.Ecommerce.Controller;
 
-import com.example.Ecommerce.payload.JwtAuthResponse;
+import com.example.Ecommerce.payload.jwt.JwtAuthResponse;
 import com.example.Ecommerce.payload.LoginDto;
-import com.example.Ecommerce.payload.RegisterDto;
-import com.example.Ecommerce.response.ResponseMessage;
+import com.example.Ecommerce.payload.user.RegisterDto;
 import com.example.Ecommerce.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

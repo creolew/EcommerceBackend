@@ -1,22 +1,17 @@
 package com.example.Ecommerce.service.impl;
 
-import com.example.Ecommerce.entity.Role;
 import com.example.Ecommerce.entity.User;
-import com.example.Ecommerce.exception.EcommerceAPIException;
 import com.example.Ecommerce.exception.ResourceNotFoundException;
-import com.example.Ecommerce.payload.UserDto;
+import com.example.Ecommerce.payload.user.UserDto;
 import com.example.Ecommerce.repository.RoleRepository;
 import com.example.Ecommerce.repository.UserRepository;
 import com.example.Ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,23 +38,6 @@ public class UserServiceImpl implements UserService {
         return listUsersDto;
     }
 
-//    @Override
-//    public UserDto createUser(UserDto userDto) {
-//
-//        if(userRepo.existsByEmail(userDto.getEmail())){
-//            throw new EcommerceAPIException(HttpStatus.BAD_REQUEST, "Email is already used");
-//        }
-//
-//
-//        User tempUser = mapToEntity(userDto);
-//
-//        User savedUser = userRepo.save(tempUser);
-//
-//        return mapToDto(savedUser);
-//
-//
-//
-//    }
 
     public UserDto updateUser(int userId, UserDto userDto){
         User user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
@@ -127,35 +105,7 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-    private User mapToEntity(UserDto userDto){
 
-        User user = new User();
-        user.setId(userDto.getId());
-        user.setUsername(userDto.getUsername());
-        user.setEmail(userDto.getEmail());
-
-        //user.setPassword(userDto.getPassword());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
-        user.setEnabled(userDto.isEnabled());
-        user.setPhotos(userDto.getPhotos());
-        user.setLastName(userDto.getLastName());
-        user.setFirstName(userDto.getFirstName());
-
-        Set<String> strRoles = userDto.getRoles();
-
-        for(String str : strRoles){
-            Role role = roleRepository.findByName(str);
-            if(role == null){
-               throw new RuntimeException("Error: Role is not found.");
-            }
-
-            user.addRole(role);
-
-        };
-        return user;
-
-    }
 
 
 

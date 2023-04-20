@@ -1,4 +1,4 @@
-package com.example.Ecommerce.payload;
+package com.example.Ecommerce.payload.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
