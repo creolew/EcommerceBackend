@@ -70,4 +70,19 @@ public class CategoryController {
         return new ResponseEntity<>(responseMessage, HttpStatus.OK);
 
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN')")
+    @GetMapping("/getCategoriesPagingAndSorting")
+    public List<CategoryDto> listCategoryPagingAndSorting(@RequestParam(name = "pageNo") int pageNo, @RequestParam(name = "pageSize") int pageSize){
+        return categoryService.listCategoriesPagingAndSorting(pageNo,pageSize);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN')")
+    @GetMapping("/searchCategoriesByNameOrAlias")
+    public List<CategoryDto> searchCategoriesByNameOrAlias(@RequestParam(name = "query") String query){
+        return categoryService.searchCategories(query);
+    }
+
+
+
 }

@@ -8,11 +8,16 @@ import com.example.Ecommerce.payload.category.SubCategoryDto;
 import com.example.Ecommerce.repository.CategoryRepository;
 import com.example.Ecommerce.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -105,6 +110,35 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto listCategoryById(Integer id) {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));;
         return mapToDto(category);
+    }
+
+    @Override
+    public List<CategoryDto> listCategoriesPagingAndSorting(int pageNo, int pageSize) {
+
+        String sortBy = "alias";
+        String sortDir = "asc";
+
+
+        //Sort object
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?
+                Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        //Pageable object
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+
+        Page<Category> page = categoryRepository.findAll(pageable);
+
+        List<Category> categories = page.getContent();
+        List<CategoryDto> cateDto = categories.stream().map(cate -> mapToDto(cate)).collect(Collectors.toList());
+
+        return cateDto;
+    }
+
+    @Override
+    public List<CategoryDto> searchCategories(String query) {
+        List<CategoryDto> listCategoriesDto = categoryRepository.searchCategoryByName(query)
+                                                .stream().map(category -> mapToDto(category)).collect(Collectors.toList());
+        return listCategoriesDto;
     }
 
 

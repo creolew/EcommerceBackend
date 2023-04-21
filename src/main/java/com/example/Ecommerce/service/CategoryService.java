@@ -18,4 +18,8 @@ public interface CategoryService {
     void deleteCategory(Integer id);
 
     CategoryDto listCategoryById(Integer id);
+
+    List<CategoryDto> listCategoriesPagingAndSorting(int pageNo, int pageSize);
+
+    List<CategoryDto> searchCategories(String query);
 }
