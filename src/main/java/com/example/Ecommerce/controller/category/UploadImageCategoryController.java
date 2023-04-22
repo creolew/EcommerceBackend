@@ -1,12 +1,10 @@
-package com.example.Ecommerce.Controller.category;
+package com.example.Ecommerce.controller.category;
 
 
 import com.example.Ecommerce.entity.Category;
 import com.example.Ecommerce.entity.FileInfo;
-import com.example.Ecommerce.entity.User;
 import com.example.Ecommerce.exception.ResourceNotFoundException;
 import com.example.Ecommerce.repository.CategoryRepository;
-import com.example.Ecommerce.repository.UserRepository;
 import com.example.Ecommerce.response.ResponseMessage;
 import com.example.Ecommerce.service.FilesStorageService;
 import org.springframework.beans.factory.annotation.Autowired;

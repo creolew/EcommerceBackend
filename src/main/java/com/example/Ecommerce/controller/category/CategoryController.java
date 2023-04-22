@@ -1,9 +1,7 @@
-package com.example.Ecommerce.Controller.category;
+package com.example.Ecommerce.controller.category;
 
-import com.example.Ecommerce.entity.Category;
 import com.example.Ecommerce.payload.category.CategoryDto;
 import com.example.Ecommerce.payload.category.SubCategoryDto;
-import com.example.Ecommerce.payload.user.UserDto;
 import com.example.Ecommerce.response.ResponseMessage;
 import com.example.Ecommerce.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

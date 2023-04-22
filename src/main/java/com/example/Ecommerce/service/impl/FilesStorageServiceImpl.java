@@ -1,12 +1,11 @@
 package com.example.Ecommerce.service.impl;
 
-import com.example.Ecommerce.Controller.user.FilesController;
+import com.example.Ecommerce.controller.user.FilesController;
 import com.example.Ecommerce.entity.FileInfo;
 import com.example.Ecommerce.service.FilesStorageService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 

@@ -52,6 +52,7 @@ public class WebSecurityConfig  {
                 .authorizeRequests( (authorize) ->
                                                     authorize
                                                     .requestMatchers("/api/auth/v1/**").permitAll()
+                                                    .requestMatchers("/api/product/v1/**").permitAll()
                                                     //.requestMatchers("/api/category/v1/**").hasAuthority("ROLE_EDITOR")
                                                     .anyRequest().authenticated()
 

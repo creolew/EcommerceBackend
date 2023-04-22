@@ -1,4 +1,4 @@
-package com.example.Ecommerce.Controller.user;
+package com.example.Ecommerce.controller.user;
 
 import com.example.Ecommerce.payload.user.UserDto;
 import com.example.Ecommerce.response.ResponseMessage;

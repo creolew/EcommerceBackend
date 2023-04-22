@@ -1,4 +1,4 @@
-package com.example.Ecommerce.Controller.user;
+package com.example.Ecommerce.controller.user;
 
 import com.example.Ecommerce.entity.FileInfo;
 import com.example.Ecommerce.entity.User;

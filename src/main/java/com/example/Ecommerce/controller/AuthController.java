@@ -1,4 +1,4 @@
-package com.example.Ecommerce.Controller;
+package com.example.Ecommerce.controller;
 
 import com.example.Ecommerce.payload.jwt.JwtAuthResponse;
 import com.example.Ecommerce.payload.LoginDto;
