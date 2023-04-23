@@ -25,14 +25,6 @@ public class ECommerceApplication  {
 
 		ApplicationContext context = SpringApplication.run(ECommerceApplication.class, args);
 		System.out.println("Hello");
-//		String[] beanNames = context.getBeanDefinitionNames();
-//		for (String beanName : beanNames) {
-//			if (!beanName.startsWith("org.springframework") && !beanName.startsWith("com.example")) {
-//				System.out.println(beanName);
-//			}
-//		}
-
-
 
 
 	}
