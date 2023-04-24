@@ -22,4 +22,7 @@ public class CustomerController {
     public ResponseEntity<?> confirmUserAccount(@RequestParam("token")String confirmationToken) {
         return customerService.confirmEmail(confirmationToken);
     }
+
+
+
 }
